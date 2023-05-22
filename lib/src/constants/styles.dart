@@ -89,3 +89,10 @@ class Styles {
   static TextStyle noColorStyle(BuildContext context) =>
       const TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
 }
+
+TextStyle kDialogCancelStyle(BuildContext context) => const TextStyle(
+      fontSize: Sizes.p14,
+      color: Colors.red,
+    );
+TextStyle kDialogConfirmStyle(BuildContext context) =>
+    TextStyle(fontSize: Sizes.p14, color: AppColors.blue(context));

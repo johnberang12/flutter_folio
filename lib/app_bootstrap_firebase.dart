@@ -1,3 +1,4 @@
+import 'package:flutter_folio/src/exceptions/async_error_logger.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Creates the top-level [ProviderContainer] by overriding providers with fake
@@ -35,6 +36,6 @@ Future<ProviderContainer> createFirebaseProviderContainer(
       // localCartRepositoryProvider.overrideWithValue(localCartRepository),
       // remoteCartRepositoryProvider.overrideWithValue(remoteCartRepository),
     ],
-    observers: [],
+    observers: [AsyncErrorLogger()],
   );
 }

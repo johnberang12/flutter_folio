@@ -5,23 +5,16 @@ class AppColors {
   //     Theme.of(context).brightness == Brightness.dark
   //         ? null
   //         : const Color(0xffffbf00);
-
-  static const primaryHue = Color(0xffffbf00);
-  static const primaryTint80 = Color(0xffffd147);
-  static const primaryTint60 = Color(0xffffde7c);
-  static const primaryTint40 = Color(0x70fbe4a0);
-  static const primaryTint20 = Color(0xfffff4d3);
-  static const primaryTint10 = Color(0xfffffbeb);
-  static const primaryShade20 = Color(0xffd6a001);
-  static const primaryShade40 = Color(0xffa87e00);
-  static const primaryShade60 = Color.fromARGB(255, 118, 89, 0);
-  static const primaryGrey80 = Color.fromARGB(255, 83, 76, 58);
-
-  static const primaryShade800 = Color(0xffFF8F00);
-  static const primaryShade200 = Color(0xffFFE082);
+  static const amber = Color(0xffffbf00);
+  static const primaryHue = Color(0xff2196F3);
+  static const primaryTint100 = Color(0xffBBDEFB);
+  static const primaryTint50 = Color(0xffE3F2FD);
+  static const primaryShade600 = Color(0xff1E88E5);
+  static const primaryShade900 = Color(0xff0D47A1);
 
   static const red = Color(0xffFF0000);
-
+  //use for delete button
+  static const mutedRed = Color(0xffFF6961);
   //* Grey
   static const grey = Color(0xff808080);
 
@@ -51,30 +44,6 @@ class AppColors {
 
   static const facebookColor = Color(0xFF1877F2);
 
-  // Colors.grey[50]: Color(0xfffafafa)
-// Colors.grey[100]: Color(0xfff5f5f5)
-// Colors.grey[150]: Color(0xff969696)
-// Colors.grey[200]: Color(0xffEEEEEE)
-// Colors.grey[250]: Color(0xffFAFAFA)
-// Colors.grey[300]: Color(0xffE0E0E0)
-
-// Colors.grey[350]: Color(0xff757575) //undefined
-
-// Colors.grey[400]: Color(0xffBDBDBD)
-// Colors.grey[450]: Color(0xff424242) //undefined
-// Colors.grey[500]: Color(0xff9E9E9E)
-// Colors.grey[550]: Color(0xff1c1c1c) //undefined
-// Colors.grey[600]: Color(0xff757575)
-// Colors.grey[650]: Color(0xff686868)
-// Colors.grey[700]: Color(0xff616161)
-// Colors.grey[750]: Color(0xff515151)
-// Colors.grey[800]: Color(0xff424242)
-// Colors.grey[850]: Color(0xff313131)
-// Colors.grey[900]: Color(0xff212121)
-// Colors.grey[950]: Color(0xff050505) //undefined
-// Colors.black: Color(0xff000000)
-// Colors.white: Color(0xffFFFFFF)
-
   static const blues = Color.fromARGB(255, 57, 94, 138);
 
   static Color blue(BuildContext context) =>
@@ -84,10 +53,10 @@ class AppColors {
 
   static const activeColor = Color(0xff418452);
 
-  static Color? unreadIndicatoreColor(BuildContext context) =>
-      Theme.of(context).brightness == Brightness.dark
-          ? primaryGrey80
-          : primaryTint10;
+  // static Color? unreadIndicatoreColor(BuildContext context) =>
+  //     Theme.of(context).brightness == Brightness.dark
+  //         ? primaryGrey80
+  //         : primaryTint10;
 
 //* text colors
   static Color? textBlack80(BuildContext context) =>

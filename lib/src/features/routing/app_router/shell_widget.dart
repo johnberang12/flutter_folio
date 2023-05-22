@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_folio/src/services/connectivity_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../common_widget/responsive_center.dart';
 import '../../../constants/app_colors.dart';
 import '../../../constants/sizes.dart';
 import '../../../constants/styles.dart';
 
-class ShellWidget extends StatelessWidget {
+//* this widget is the mother scaffold of the app
+//* this is used to show that the user has no internet connection
+//* it is also can be use to show any widget in the future that can be visible in anywhere in the app if needed
+class ShellWidget extends ConsumerWidget {
   const ShellWidget({super.key, required this.child});
   final Widget child;
 
   @override
-  Widget build(BuildContext context) {
-    const connection = true;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final connection = ref.watch(connectivityServiceProvider);
     final topPad = MediaQuery.of(context).padding.top;
     return Scaffold(
       extendBodyBehindAppBar: true,

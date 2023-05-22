@@ -1,0 +1,26 @@
+import 'package:flutter/material.dart';
+
+enum TabItem { home, account }
+
+class TabItemData {
+  const TabItemData({required this.label, required this.icon});
+
+  final String label;
+  final Widget icon;
+
+  static Map<TabItem, TabItemData> allTabs = {
+    TabItem.home: const TabItemData(
+        label: 'Home',
+        icon: Icon(
+          Icons.home,
+          size: 25,
+        )),
+    TabItem.account: const TabItemData(
+      label: 'Account',
+      icon: Icon(
+        Icons.person,
+        size: 25,
+      ),
+    ),
+  };
+}
