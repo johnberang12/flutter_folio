@@ -7,6 +7,7 @@ import '../../domain/product.dart';
 
 part 'add_product_controller.g.dart';
 
+//* unit test done
 @riverpod
 class AddProductController extends _$AddProductController {
   @override

@@ -20,6 +20,8 @@ import '../../../../constants/styles.dart';
 import '../../../routing/app_router/app_route.dart';
 import '../../domain/product.dart';
 
+const kProdScreenBodyKey = Key('product-screen-body-key');
+
 class ProductScreen extends ConsumerWidget {
   const ProductScreen({super.key, required this.product});
   final Product product;
@@ -36,6 +38,7 @@ class ProductScreen extends ConsumerWidget {
     final state = ref.watch(productScreenControllerProvider);
     return Scaffold(
       body: CustomScrollView(
+        key: kProdScreenBodyKey,
         slivers: [
           ProviderScope(
               overrides: [productProvider.overrideWithValue(product)],

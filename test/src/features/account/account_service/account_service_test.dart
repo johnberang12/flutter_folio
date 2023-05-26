@@ -63,21 +63,22 @@ void main() {
           'verify that deleteAccount throws StateError when incorrect param is passed and not call to auth.deleteAccout()',
           () async {
         final accountService = makeConnectionAccountService();
-        when(() => accountService.deleteAccount('DELETE'))
+        when(() => accountService.deleteAccount(confirmation: 'DELETE'))
             .thenAnswer((invocation) => Future.value());
-        Future call = accountService.deleteAccount('delete');
+        Future call = accountService.deleteAccount(confirmation: 'Delete');
         expect(call, throwsA(isA<StateError>()));
-        verifyNever(() => accountService.deleteAccount('DELETE'));
+        verifyNever(() => accountService.deleteAccount(confirmation: 'DELETE'));
       }, timeout: const Timeout(Duration(milliseconds: 500)));
 
       test(
           'verify that deleteAccount is correctly calling authRepo.deleteAccout when connection is true and correct param is passed',
           () async {
         final accountService = makeConnectionAccountService();
-        when(() => accountService.deleteAccount('DELETE'))
+        when(() => accountService.deleteAccount(confirmation: 'DELETE'))
             .thenAnswer((invocation) => Future.value());
-        await accountService.deleteAccount('DELETE');
-        verify(() => accountService.deleteAccount('DELETE')).called(1);
+        await accountService.deleteAccount(confirmation: 'DELETE');
+        verify(() => accountService.deleteAccount(confirmation: 'DELETE'))
+            .called(1);
       }, timeout: const Timeout(Duration(milliseconds: 500)));
 
       test(
@@ -86,7 +87,7 @@ void main() {
         final accountService = makeNoConnectionAccountService();
         when(authRepository.deleteAccount)
             .thenAnswer((invocation) => Future.value());
-        Future call = accountService.deleteAccount('DELETE');
+        Future call = accountService.deleteAccount(confirmation: 'DELETE');
         expect(call, throwsA(isA<StateError>()));
         verifyNever(authRepository.deleteAccount);
       }, timeout: const Timeout(Duration(milliseconds: 500)));

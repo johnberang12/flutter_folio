@@ -61,10 +61,9 @@ class FirestoreService {
   }
 }
 
+//TODO: rename this to firebaseFirestore
 @Riverpod(keepAlive: true)
-FirebaseFirestore firestore(FirestoreRef ref) {
-  return FirebaseFirestore.instance;
-}
+FirebaseFirestore firestore(FirestoreRef ref) => FirebaseFirestore.instance;
 
 @Riverpod(keepAlive: true)
 FirestoreService firestoreService(FirestoreServiceRef ref) {

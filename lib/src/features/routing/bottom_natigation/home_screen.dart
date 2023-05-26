@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_folio/src/common_widget/app_toast.dart';
 
 import '../../account/presentation/account_screen.dart';
 import '../../product/presentation/product_list/product_list_screen.dart';
@@ -23,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Map<TabItem, WidgetBuilder> get widgetBuilders {
     return {
       TabItem.home: (_) => const ProductListScreen(),
-      TabItem.account: (_) => AccountScreen(),
+      TabItem.account: (_) => const AccountScreen(),
     };
   }
 
@@ -35,13 +38,33 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  bool _exit = false;
+  Future<bool> onWillPop() async {
+    final toast = AppToast();
+    if (_exit) {
+      if (kIsWeb) {
+        return Future.value(false);
+      } else {
+        await SystemNavigator.pop();
+      }
+    } else {
+      _exit = true;
+      toast.showToast(msg: "Tap again to exit");
+      Future.delayed(const Duration(milliseconds: 2500), () => _exit = false);
+    }
+    return Future.value(false);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return CupertinoHomeScaffold(
-      currentTab: _currentTab,
-      onSelectedTab: _selectTab,
-      widgetBuilders: widgetBuilders,
-      navigatorKeys: navigatorKeys,
+    return WillPopScope(
+      onWillPop: onWillPop,
+      child: CupertinoHomeScaffold(
+        currentTab: _currentTab,
+        onSelectedTab: _selectTab,
+        widgetBuilders: widgetBuilders,
+        navigatorKeys: navigatorKeys,
+      ),
     );
   }
 }

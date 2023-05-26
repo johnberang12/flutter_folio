@@ -13,6 +13,9 @@ import '../../../../use_hooks/use_scroll_controller_for_animation.dart';
 import '../../domain/product.dart';
 import 'product_list_tile.dart';
 
+const kAppFloatinActionByttonKey = Key('app-floating-action-button-key');
+const homeFABKey = Key('home-floating-action-button-key');
+
 class ProductListScreen extends HookWidget {
   const ProductListScreen({super.key});
 
@@ -60,8 +63,8 @@ class ProductListScreen extends HookWidget {
               visible: hideFabController.status == AnimationStatus.completed,
               replacement: const SizedBox.shrink(),
               child: AppFloatingActionButton(
+                appFABKey: homeFABKey,
                 onPressed: () => context.appPushNamed(AppRoute.addProduct.name),
-                loaderColor: Colors.white,
               ),
             );
           }),

@@ -6,6 +6,7 @@ import '../constants/app_colors.dart';
 class OutlinedTextField extends StatelessWidget {
   const OutlinedTextField(
       {super.key,
+      this.textFormFieldKey,
       this.initialValue,
       this.controller,
       // this.height = 64,
@@ -60,6 +61,7 @@ class OutlinedTextField extends StatelessWidget {
   final EdgeInsets padding;
   final bool readOnly;
   final FocusNode? focusNode;
+  final Key? textFormFieldKey;
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +73,7 @@ class OutlinedTextField extends StatelessWidget {
         // height: height,
         width: width,
         child: TextFormField(
+          key: textFormFieldKey,
           focusNode: focusNode,
           initialValue: initialValue,
           controller: controller,

@@ -14,7 +14,7 @@ class AccountService {
   Future<void> logout() => ref.read(connectionCheckerProvider).checkConnection(
       function: () => ref.read(authRepositoryProvider).signOut());
 
-  Future<void> deleteAccount(String confirmation) async {
+  Future<void> deleteAccount({required String confirmation}) async {
     const delete = "DELETE";
     if (delete != confirmation) {
       throw StateError(

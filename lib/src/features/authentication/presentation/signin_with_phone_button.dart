@@ -11,6 +11,8 @@ import '../../../constants/styles.dart';
 import 'phone_number_input_field.dart';
 import 'signin_form_type.dart';
 
+const kPhoneSigninButtonKey = Key('phone-signin-button-key');
+
 class SignInWithPhoneButton extends HookWidget with SigninValidator {
   SignInWithPhoneButton(
       {super.key,
@@ -39,7 +41,7 @@ class SignInWithPhoneButton extends HookWidget with SigninValidator {
     }, [controller]);
     return Consumer(builder: (context, ref, _) {
       final countryCode = ref.read(countryCodeProvider);
-      final phoneNumber = "+$countryCode${controller.text}}";
+      final phoneNumber = "+$countryCode${controller.text}";
       final state = ref.watch(signinScreenControllerProvider);
       return Column(
         mainAxisSize: MainAxisSize.min,
@@ -50,6 +52,7 @@ class SignInWithPhoneButton extends HookWidget with SigninValidator {
             )
           ],
           PrimaryButton(
+            key: kPhoneSigninButtonKey,
             loading: state.isLoading,
             width: double.infinity,
             onPressed: !canSubmit.value
@@ -98,6 +101,7 @@ class _ResendButton extends HookWidget {
       children: [
         Consumer(builder: (_, ref, __) {
           final state = ref.watch(signinScreenControllerProvider);
+
           return PrimaryButton(
             onPressed: seconds.value < 1 && !state.isLoading ? onSubmit : null,
             loading: state.isLoading,

@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_folio/src/utils/connection_checker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -24,12 +25,22 @@ class SigninService {
     required void Function(FirebaseAuthException) verificationFailed,
   }) =>
       ref.watch(connectionCheckerProvider).checkConnection(
-          function: () => ref.read(authRepositoryProvider).verifyPhoneNumber(
-                phoneNumber: phoneNumber,
-                codeSent: codeSent,
-                codeAutoRetrievalTimeout: (verificationId) {},
-                verificationFailed: verificationFailed,
-              ));
+          withRetry: false,
+          function: () => ref
+                  .read(authRepositoryProvider)
+                  .verifyPhoneNumber(
+                    phoneNumber: phoneNumber,
+                    codeSent: codeSent,
+                    codeAutoRetrievalTimeout: (verificationId) {},
+                    verificationFailed: verificationFailed,
+                  )
+                  .onError((error, stackTrace) async {
+                debugPrint('verifyPhoneNumber onError: $error');
+                throw (error!);
+              }).catchError((error) {
+                debugPrint('verifyPhoneNumber catchError: $error');
+                throw (error);
+              }));
 
   Future<void> verifyOtpCode(
           {required String otpCode, required String verificationId}) =>

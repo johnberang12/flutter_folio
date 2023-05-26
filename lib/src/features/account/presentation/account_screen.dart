@@ -11,6 +11,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../common_widget/alert_dialogs.dart';
 import '../../routing/app_router/app_route.dart';
+import 'delete_account_dialog_content.dart';
+
+const kLogoutButtonKey = Key('logout-button-key');
+const kDeleteButtonKey = Key('delete-button-key');
 
 class AccountScreen extends ConsumerWidget {
   const AccountScreen({super.key});
@@ -38,9 +42,11 @@ class AccountScreen extends ConsumerWidget {
                 title: '',
               ).then((value) async {
                 if (value == true) {
+                  final confirmation =
+                      ref.read(editBottomSheetTextProvider(''));
                   await ref
                       .read(accountScreenControllerProvider.notifier)
-                      .deleteAccount();
+                      .deleteAccount(confirmation);
                 }
               }));
 //* relogin user if delete account requires so
@@ -85,12 +91,14 @@ class AccountScreen extends ConsumerWidget {
                   ),
                   const Spacer(),
                   SettingsButton(
+                    buttonKey: kLogoutButtonKey,
                     icon: const Icon(Icons.logout),
                     onPressed: () => _logout(context, ref),
                     buttonLabel: 'Logout',
                     isLoading: state.isLoading,
                   ),
                   SettingsButton(
+                    buttonKey: kDeleteButtonKey,
                     icon: const Icon(Icons.delete_forever_outlined),
                     onPressed: () => _deleteAccount(context, ref),
                     buttonLabel: 'Delete account',
@@ -105,17 +113,19 @@ class AccountScreen extends ConsumerWidget {
 }
 
 class SettingsButton extends StatelessWidget {
-  const SettingsButton({
-    Key? key,
-    this.icon,
-    required this.onPressed,
-    required this.buttonLabel,
-    this.isLoading = false,
-  }) : super(key: key);
+  const SettingsButton(
+      {Key? key,
+      this.icon,
+      required this.onPressed,
+      required this.buttonLabel,
+      this.isLoading = false,
+      this.buttonKey})
+      : super(key: key);
   final Widget? icon;
   final void Function() onPressed;
   final String buttonLabel;
   final bool isLoading;
+  final Key? buttonKey;
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +133,9 @@ class SettingsButton extends StatelessWidget {
       children: [
         if (icon != null) ...[icon!],
         TextButton(
-            onPressed: isLoading ? null : onPressed, child: Text(buttonLabel))
+            key: buttonKey,
+            onPressed: isLoading ? null : onPressed,
+            child: Text(buttonLabel))
       ],
     );
   }

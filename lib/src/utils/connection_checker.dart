@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //* this class is used to check user's internet connection before calling an api
 //* it tries to retry fetching internet connection 5 times before it finally delares that the user has no internet connection
+//* unit test done
 class ConnectionChecker {
   ConnectionChecker({
     required this.retry,

@@ -6,6 +6,7 @@ import '../constants/styles.dart';
 class ClearTextField extends StatelessWidget {
   const ClearTextField(
       {Key? key,
+      this.textFieldKey,
       this.controller,
       this.label,
       this.width = double.infinity,
@@ -32,12 +33,14 @@ class ClearTextField extends StatelessWidget {
   final TextStyle? style;
   final int? maxLines;
   final int? minLines;
+  final Key? textFieldKey;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
       child: TextFormField(
+        key: textFieldKey,
         initialValue: initialValue,
         inputFormatters: inputFormatters,
         controller: controller,

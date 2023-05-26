@@ -10,7 +10,15 @@ class MyApp extends ConsumerWidget {
     final goRouter = ref.watch(goRouterProvider);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+
+      ///  _AssertionError ('package:flutter/src/widgets/app.dart': Failed assertion: line 449 pos 14:
+      ///  '(routeInformationProvider ?? routeInformationParser ?? routerDelegate ?? backButtonDispatcher) == null':
+      /// If the routerConfig is provided, all the other router delegates must not be provided)
       routerConfig: goRouter,
+      //needs this 3 parameters for widget testing
+      // routeInformationParser: goRouter.routeInformationParser,
+      // routerDelegate: goRouter.routerDelegate,
+      // routeInformationProvider: goRouter.routeInformationProvider,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
     );

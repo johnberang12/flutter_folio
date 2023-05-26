@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:flutter/material.dart';
 
+const kCancelActionKey = Key('cancel-action-button-text');
+
 Future<void> showAppActionSheet(
     {required BuildContext context,
     required Widget title,
@@ -41,5 +43,10 @@ Future<void> showAppActionSheet(
           ),
         ]
       ],
-      cancelAction: cancelAction ?? CancelAction(title: const Text('Cancel')));
+      cancelAction: cancelAction ??
+          CancelAction(
+              title: const Text(
+            'Cancel',
+            key: kCancelActionKey,
+          )));
 }

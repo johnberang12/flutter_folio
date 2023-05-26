@@ -24,16 +24,19 @@ class SigninScreen extends HookWidget {
       required ValueNotifier<String> verificationID}) async {
     //* this checks the form type to know which method to call in the controller
     if (formType.value == SigninFormType.phoneNumber) {
+      debugPrint('phoneNumber: $number');
       await ref.read(signinScreenControllerProvider.notifier).verifyPhoneNumber(
           phoneNumber: number,
           verificationFailed: (e) => phoneVerificationFailed(e, context),
           codeSent: (verificationId, token) {
             //*This method is called when the code is successfully sent to the user
             //* it saves the verification id to a variable to be used for verification and switch the formtype to otpCode form
+            debugPrint('code sent...');
             verificationID.value = verificationId ?? "";
             formType.value = SigninFormType.otpCode;
           });
     } else {
+      debugPrint('calling verifyOtpCode...');
       ref.read(signinScreenControllerProvider.notifier).verifyOtpCode(
           otpCode: otpCode, verificationId: verificationID.value);
     }
@@ -63,6 +66,7 @@ class SigninScreen extends HookWidget {
             ),
             gapH64,
             Consumer(builder: (context, ref, _) {
+              ///signinScreenController listener that triggers alert dialog when something went wrong
               ref.listen<AsyncValue>(signinScreenControllerProvider,
                   (_, state) => state.showAlertDialogOnError(context));
 
@@ -74,7 +78,7 @@ class SigninScreen extends HookWidget {
                           context: context,
                           ref: ref,
                           formType: formType,
-                          number: phoneNumber,
+                          number: numberController.text,
                           otpCode: otpController.text,
                           verificationID: verificationId),
                       submitOTP: (otpCode) => _onPrimaryButtonPress(
@@ -104,10 +108,10 @@ class SigninScreen extends HookWidget {
                           formType.value = SigninFormType.phoneNumber),
 
                   ///* romove this after testing
-                  gapH64,
-                  TextButton(
-                      onPressed: () => switchFormType(formType),
-                      child: const Text('Switch form'))
+                  // gapH64,
+                  // TextButton(
+                  //     onPressed: () => switchFormType(formType),
+                  //     child: const Text('Switch form'))
                 ],
               );
             }),

@@ -21,20 +21,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// - override the default implementations with a list of "overrides"
 Future<ProviderContainer> createFirebaseProviderContainer(
     {bool addDelay = true}) async {
-  //// TODO: Replace with Firebase repositories
-  // final reviewsRepository = FakeReviewsRepository(addDelay: addDelay);
-  // * set delay to false to make it easier to add/remove items
-  // final localCartRepository = FakeLocalCartRepository(addDelay: false);
-  // final remoteCartRepository = FakeRemoteCartRepository(addDelay: false);
-  // final ordersRepository = FakeOrdersRepository(addDelay: addDelay);
-
+//exmple:
+  // final mockAuthRepository = MockAuthRepository();
   return ProviderContainer(
     overrides: [
       // repositories
-      // reviewsRepositoryProvider.overrideWithValue(reviewsRepository),
-      // ordersRepositoryProvider.overrideWithValue(ordersRepository),
-      // localCartRepositoryProvider.overrideWithValue(localCartRepository),
-      // remoteCartRepositoryProvider.overrideWithValue(remoteCartRepository),
+      // example:
+      // authRepositoryProvider.overrideWithValue(mockAuhRepository),
     ],
     observers: [AsyncErrorLogger()],
   );

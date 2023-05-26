@@ -9,6 +9,7 @@ import 'package:flutter_folio/src/features/introduction/welcome_screen.dart';
 import 'package:flutter_folio/src/features/product/presentation/product/product_screen.dart';
 
 import 'package:flutter_folio/src/features/routing/app_router/shell_widget.dart';
+import 'package:flutter_folio/src/landing_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -20,7 +21,8 @@ import 'custom_transition_page.dart';
 part 'app_route.g.dart';
 
 enum AppRoute {
-  welcome(path: '/'),
+  landing(path: '/'),
+  welcome(path: 'welcome'),
   home(path: 'home'),
   signin(path: 'signin'),
   product(path: 'product'),
@@ -41,20 +43,23 @@ GoRouter goRouter(GoRouterRef ref) {
       GlobalKey<NavigatorState>(debugLabel: 'shell');
 
   return GoRouter(
+      debugLogDiagnostics: true,
       navigatorKey: rootNavigatorKey,
-      initialLocation: ref.read(authRepositoryProvider).currentUser != null
-          ? "/home"
-          : AppRoute.welcome.path,
+      initialLocation: '/',
       refreshListenable: ref.watch(authRepositoryProvider),
       redirect: (context, state) {
         //* redirect callback of go_router. It is responsible for redirecting the user to the correct page
         // when signingin and logging out.
+
         final currentUser = ref.read(authRepositoryProvider).currentUser;
         final loggingIn = state.location == '/signin';
-        final loggingOut = currentUser == null && state.location == '/home';
+        debugPrint('currentLocation: ${state.location}');
+        debugPrint('currentUser: ${currentUser?.uid}');
+        final loggingOut = currentUser == null &&
+            (state.location == '/home' || state.location == '/');
         final loggedIn = currentUser != null;
         //redirect the user to the welcome screen when the user logs out
-        if (loggingOut) return '/';
+        if (loggingOut) return '/welcome';
         //redirect the user to the home screen when the use logs in
         if (loggedIn && loggingIn) {
           return '/home';
@@ -68,14 +73,22 @@ GoRouter goRouter(GoRouterRef ref) {
             builder: (context, state, child) => ShellWidget(child: child),
             routes: [
               GoRoute(
-                  path: AppRoute.welcome.path,
-                  name: AppRoute.welcome.name,
+                  path: AppRoute.landing.path,
+                  name: AppRoute.landing.name,
                   pageBuilder: (context, state) =>
                       buildPageWithDefaultTransition<void>(
                           context: context,
                           state: state,
-                          child: const WelcomeScreen()),
+                          child: const LandingPage()),
                   routes: [
+                    GoRoute(
+                        path: AppRoute.welcome.path,
+                        name: AppRoute.welcome.name,
+                        pageBuilder: (context, state) =>
+                            buildPageWithDefaultTransition<void>(
+                                context: context,
+                                state: state,
+                                child: const WelcomeScreen())),
                     GoRoute(
                         path: AppRoute.signin.path,
                         name: AppRoute.signin.name,

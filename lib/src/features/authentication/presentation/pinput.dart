@@ -69,6 +69,7 @@ class _CustomPinPutWidgetState extends State<CustomPinPutWidget> {
               width: 56,
               height: 90,
               child: TextField(
+                key: ValueKey(index),
                 controller: _controllers[index],
                 focusNode: _focusNodes[index],
                 autofocus: index == 0,

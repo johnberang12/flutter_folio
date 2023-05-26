@@ -1,8 +1,6 @@
 import 'package:flutter_folio/src/features/account/account_service/account_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import 'delete_account_dialog_content.dart';
-
 part 'account_screen_controller.g.dart';
 
 //* a controller subclass generated using riverpod generator.
@@ -17,15 +15,23 @@ class AccountScreenController extends _$AccountScreenController {
 
   Future<void> logout() async {
     state = const AsyncLoading();
-    state =
+    final newState =
         await AsyncValue.guard(() => ref.read(accountServiceProvider).logout());
+
+    if (newState.hasError) {
+      //only assign the state to show error dialog in the UI if the logout fails
+      state = newState;
+    }
+    // no need to assign the state and update the UI as the use will be redirected to the welcome screen
   }
 
-  Future<void> deleteAccount() async {
+  Future<void> deleteAccount(String confirmation) async {
     state = const AsyncLoading();
-    final confirmation =
-        ref.read(editBottomSheetTextProvider('').notifier).state;
-    state = await AsyncValue.guard(
-        () => ref.read(accountServiceProvider).deleteAccount(confirmation));
+    final newState = await AsyncValue.guard(() => ref
+        .read(accountServiceProvider)
+        .deleteAccount(confirmation: confirmation));
+    if (newState.hasError) {
+      state = newState;
+    }
   }
 }

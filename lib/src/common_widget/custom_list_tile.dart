@@ -5,6 +5,7 @@ import '../constants/sizes.dart';
 class CustomListTile extends StatelessWidget {
   const CustomListTile(
       {Key? key,
+      this.productTileKey,
       this.thumbnail,
       this.title,
       this.location,
@@ -30,6 +31,7 @@ class CustomListTile extends StatelessWidget {
   final Color? tileColor;
   final Widget? boost;
   final double tileHeight;
+  final Key? productTileKey;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,7 @@ class CustomListTile extends StatelessWidget {
     final textFactor = MediaQuery.of(context).textScaleFactor;
     final height = MediaQuery.of(context).size.height;
     return InkWell(
+      key: productTileKey,
       onTap: onTap,
       child: Container(
         height: height * textFactor * tileHeight,

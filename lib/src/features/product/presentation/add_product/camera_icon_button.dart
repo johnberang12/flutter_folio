@@ -12,6 +12,8 @@ import '../../../camera/presentation/camera_modal_popup.dart';
 import '../../../camera/presentation/access_denied_dialog.dart';
 import 'camera_icon_button_controller.dart';
 
+const kCameraIconButtonKey = Key('camera-icon-button-key');
+
 class CameraIconButton extends ConsumerWidget {
   const CameraIconButton({
     Key? key,
@@ -36,10 +38,10 @@ class CameraIconButton extends ConsumerWidget {
     final totalImages = fileController.length + networkController.length;
 
     return InkWell(
+      key: kCameraIconButtonKey,
       onTap: () => showCameraActionSheet(
           context: context,
           pickMultipleImages: () => pickImageController.pickGalleryImages(
-              context: context,
               fileController: fileController,
               deniedPermission: () => showAccessPermissionDeniedDialog(
                     context: context,
@@ -48,7 +50,6 @@ class CameraIconButton extends ConsumerWidget {
               totalImages: totalImages),
           pickSingleImage: () async {},
           openDeviceCamera: () => pickImageController.openDeviceCamera(
-              context: context,
               fileController: fileController,
               deniedPermission: () => showAccessPermissionDeniedDialog(
                     context: context,

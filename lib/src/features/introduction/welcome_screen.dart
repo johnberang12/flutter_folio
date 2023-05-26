@@ -6,6 +6,9 @@ import '../../common_widget/primary_button.dart';
 import '../../constants/styles.dart';
 import '../routing/app_router/app_route.dart';
 
+//button key for widget testing
+const kGetStartedButtonKey = Key('get-started-button-key');
+
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
@@ -35,6 +38,7 @@ class WelcomeScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: PrimaryButton(
+        key: kGetStartedButtonKey,
         padding: const EdgeInsets.only(bottom: Sizes.p32, right: 16, left: 16),
         onPressed: () => context.appGoNamed(AppRoute.signin.name),
         loadingDuration: 3000,

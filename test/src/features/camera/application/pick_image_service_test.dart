@@ -12,16 +12,13 @@ import 'package:mocktail/mocktail.dart';
 import '../../../mocks.dart';
 
 void main() {
-//*uncomment if needed
   late MockImagePickerRepository mockImagePickerRepository;
   late PickImageService pickImageService;
   late ImageEditingController<File> fileController;
 
   setUp(() {
     mockImagePickerRepository = MockImagePickerRepository();
-    pickImageService = PickImageService(
-      repository: mockImagePickerRepository,
-    );
+    pickImageService = PickImageService(repository: mockImagePickerRepository);
     fileController = ImageEditingController<
         File>(); // setup this controller as per your implementation
   });
@@ -50,6 +47,7 @@ void main() {
           'when fileController contains 9 images and the user picked another 3 images, file controller should contain 10',
           () async {
         //* Arrange
+
         when(() => mockImagePickerRepository.pickMultiImage(
                   deniedPermission: any(named: 'deniedPermission'),
                 ))
@@ -74,6 +72,7 @@ void main() {
           'fileController should contain the image picked if the fileController is empty',
           () async {
         //* Arrange
+
         final pickedFile = File('path1');
         when(() => mockImagePickerRepository.pickImage(
                 source: ImageSource.gallery,
@@ -93,6 +92,7 @@ void main() {
       }, timeout: const Timeout(Duration(milliseconds: 500)));
       test('pickSingleGalleryImage replaces old image with new one', () async {
         //* Arrange
+
         final oldFile = File('path0');
         final pickedFile = File('path1');
         fileController.replace(oldFile); //initially containes file
@@ -120,6 +120,7 @@ void main() {
           'takeCameraImage containes correct number of image when allowMultiple is true',
           () async {
         //* Arrange
+
         final oldFile = File('path0');
         final pickedFile = File('path1');
         fileController.addItem(oldFile);
@@ -145,6 +146,7 @@ void main() {
           'fileController dont add item if the fileController already containes 10',
           () async {
         //* Arrange
+
         //  when().thenAnswer((invocation) => Future.value());
         final pickedFile = File('path1');
         when(() => mockImagePickerRepository.pickImage(
@@ -166,6 +168,7 @@ void main() {
       test('fileController replaces old item if allowMultiple is false',
           () async {
         //* Arrange
+
         //  when().thenAnswer((invocation) => Future.value());
         final oldFile = File('path0');
         final pickedFile = File('path1');

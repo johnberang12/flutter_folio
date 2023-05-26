@@ -40,17 +40,21 @@ class PrimaryButton extends HookWidget {
 
 //* this is used to show loading spinner while the button is performning a task.
 //* it is also used to disable the button to prevent user from interacting with it while operation is in progress
-  void _handleButtonPress(ValueNotifier<bool> isLoading) async {
+  void _handleButtonPress(
+      ValueNotifier<bool> isLoading, IsMounted isMounted) async {
     if (onPressed != null) {
       isLoading.value = true;
-
       await onPressed!();
-      isLoading.value = false;
+      final result = isMounted();
+      if (result) {
+        isLoading.value = false;
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final isMounted = useIsMounted();
     final isLoading = useState<bool>(false);
     final screenWidth = MediaQuery.of(context).size.width;
     final double defaultWidth =
@@ -65,7 +69,7 @@ class PrimaryButton extends HookWidget {
             //  AppColors.primaryTint60,
             onPressed: isLoading.value || loading || onPressed == null
                 ? null
-                : () => _handleButtonPress(isLoading),
+                : () => _handleButtonPress(isLoading, isMounted),
             color: backgroundColor ?? AppColors.primaryHue,
             textColor: Colors.white,
             shape: RoundedRectangleBorder(

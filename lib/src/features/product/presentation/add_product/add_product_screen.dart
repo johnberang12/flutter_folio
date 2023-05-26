@@ -13,7 +13,6 @@ import 'package:flutter_folio/src/features/product/presentation/add_product/add_
 import 'package:flutter_folio/src/features/product/presentation/add_product/add_product_screen_validator.dart';
 import 'package:flutter_folio/src/features/product/presentation/add_product/image_input_widget.dart';
 import 'package:flutter_folio/src/utils/async_value_ui.dart';
-import 'package:flutter_folio/src/utils/form_validator.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -21,12 +20,28 @@ import 'package:go_router/go_router.dart';
 import '../../../../common_widget/clear_text_field.dart';
 import '../../../../common_widget/confirmation_callback.dart';
 import '../../../../constants/styles.dart';
+import '../../../../utils/form_validator.dart';
 import '../../domain/product.dart';
+
+const kOnSaveButtonKey = Key('add-prod-screen-done-button-key');
+const kAddProductScreenAppbarKey = Key('add-product-screen-appbar-key');
+const kProductTitleFieldKey = Key('product-title-field-key');
+const kProductPriceFieldKey = Key('product-price-field-key');
+const kProductDescriptionFieldKey = Key('product-description-field-key');
 
 class AddProductScreen extends HookWidget with AddProductScreenValidator {
   AddProductScreen({super.key, Product? product}) : _product = product;
   final Product? _product;
   final _formKey = GlobalKey<FormState>();
+
+  // bool _isFormValid() {
+  //   if (_formKey.currentState!.validate()) {
+  //     _formKey.currentState!.save();
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
 //a reusable callback for adding a new product and editing existing one.
   Future<void> _submit(BuildContext context, WidgetRef ref, Product product,
@@ -34,6 +49,7 @@ class AddProductScreen extends HookWidget with AddProductScreenValidator {
     final toast = AppToast();
     //this validates the form and save if all fields are valid
     final isValid = ref.read(formValidatorProvider(_formKey.currentState!));
+    // final isValid = _isFormValid();
     //checks if the network images is empty and the picked file images is empty, returns false
     final isNotEmptyPhotos = (images.isNotEmpty || product.photos.isNotEmpty);
 
@@ -76,7 +92,6 @@ class AddProductScreen extends HookWidget with AddProductScreenValidator {
           titleController.text = _product!.title;
           priceController.text = _product!.price.toString();
           descriptionController.text = _product!.description;
-          print('price: ${priceController.text}');
         }
       });
 
@@ -85,10 +100,11 @@ class AddProductScreen extends HookWidget with AddProductScreenValidator {
 
     return Scaffold(
       appBar: AppBar(
+        key: kAddProductScreenAppbarKey,
         title: Text(_product != null ? 'Edit Product' : 'Add Product'),
         actions: [
           Consumer(builder: (context, ref, _) {
-            final user = ref.watch(authRepositoryProvider).currentUser;
+            final userId = ref.watch(authRepositoryProvider).currentUser?.uid;
             //list of imagefiles picked by the user
             final fileValue = ref.watch(fileControllerProvider);
             //list of network images. if the user is adding new product, this is empty
@@ -96,6 +112,8 @@ class AddProductScreen extends HookWidget with AddProductScreenValidator {
 
             return AppbarActionTextButton(
               text: "Done",
+              key: kOnSaveButtonKey,
+              // textButtonKey: kOnSaveButtonKey,
               onPressed: () async {
                 //creating a new product for adding a new product or editing existing product to minimize code.
                 //this is ok for this simple Product object that has few and simple fields.
@@ -104,7 +122,7 @@ class AddProductScreen extends HookWidget with AddProductScreenValidator {
 
                 final newProduct = Product(
                     id: _product?.id ?? idFromCurrentDate(),
-                    ownerId: _product?.ownerId ?? user?.uid ?? "",
+                    ownerId: _product?.ownerId ?? userId ?? "",
                     title: titleController.text,
                     description: descriptionController.text,
                     price: double.tryParse(priceController.text) ?? 0.0,
@@ -149,6 +167,7 @@ class AddProductScreen extends HookWidget with AddProductScreenValidator {
 
                     ///title field
                     ClearTextField(
+                      textFieldKey: kProductTitleFieldKey,
                       controller: titleController,
                       label: 'Enter product title',
                       validator: titleErrorText,
@@ -159,6 +178,7 @@ class AddProductScreen extends HookWidget with AddProductScreenValidator {
                     ),
 
                     ClearTextField(
+                        textFieldKey: kProductPriceFieldKey,
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
                               RegExp(r'(^\d*\.?\d*)'))
@@ -174,6 +194,7 @@ class AddProductScreen extends HookWidget with AddProductScreenValidator {
 
                     ///description field
                     ClearTextField(
+                      textFieldKey: kProductDescriptionFieldKey,
                       controller: descriptionController,
                       label: 'Desribe your item in as much details as you can',
                       validator: descriptionErrorText,

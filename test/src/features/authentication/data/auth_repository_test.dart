@@ -1,6 +1,6 @@
 @Timeout(Duration(milliseconds: 500))
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_auth_mocks/firebase_auth_mocks.dart' as firebase_mocks;
+// import 'package:firebase_auth_mocks/firebase_auth_mocks.dart' as firebase_mocks;
 import 'package:flutter_folio/src/features/authentication/data/auth_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -10,9 +10,8 @@ import '../../../mocks.dart';
 void main() {
   late MockFirebaseAuth mockFirebaseAuth;
   late AuthRepository authRepository;
-  late firebase_mocks.MockUser testUser; // Declare a MockUser
+  late MockUser testUser; // Declare a MockUser
   late MockUserCredential userCredential;
-  late MockUser mockUser;
 
   setUpAll(() {
     registerFallbackValue(FakeAuthCredential());
@@ -22,9 +21,8 @@ void main() {
   setUp(() {
     mockFirebaseAuth = MockFirebaseAuth();
     authRepository = AuthRepository(auth: mockFirebaseAuth);
-    testUser = firebase_mocks.MockUser(); // Initialize a MockUser
+    testUser = MockUser(); // Initialize a MockUser
     userCredential = MockUserCredential();
-    mockUser = MockUser();
   });
 
   group('AuthRepository test', () {
@@ -120,12 +118,12 @@ void main() {
     }, timeout: const Timeout(Duration(milliseconds: 500)));
 
     test('deleteAccount calls FirebaseAuth deleteAccount', () async {
-      when(() => mockFirebaseAuth.currentUser).thenReturn(mockUser);
-      when(mockUser.delete).thenAnswer((_) => Future.value());
+      when(() => mockFirebaseAuth.currentUser).thenReturn(testUser);
+      when(testUser.delete).thenAnswer((_) => Future.value());
 
       await authRepository.deleteAccount();
 
-      verify(mockUser.delete).called(1);
+      verify(testUser.delete).called(1);
     }, timeout: const Timeout(Duration(milliseconds: 500)));
   });
 }

@@ -5,6 +5,7 @@ import '../constants/sizes.dart';
 class AppbarActionTextButton extends StatelessWidget {
   const AppbarActionTextButton(
       {super.key,
+      this.textButtonKey,
       required this.text,
       this.onPressed,
       this.textColor,
@@ -15,11 +16,13 @@ class AppbarActionTextButton extends StatelessWidget {
   final Color? textColor;
   final double? fontSize;
   final bool isLoading;
+  final Key? textButtonKey;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Sizes.p18),
       child: TextButton(
+        key: textButtonKey,
         onPressed: isLoading ? null : onPressed,
         child: Text(
           text,

@@ -8,7 +8,7 @@ part 'signin_screen_controller.g.dart';
 //* this controller is designed to set the state of the UI while performing an api call
 // whether to set to loading, data or error.
 //* these controllers depends only from a repository class or service class
-
+//*unit test done
 @riverpod
 class SigninScreenController extends _$SigninScreenController {
   @override
@@ -24,8 +24,9 @@ class SigninScreenController extends _$SigninScreenController {
   }) async {
     //* same principle as below
     state = const AsyncLoading();
-    //* just a fake delay
-    await Future.delayed(const Duration(milliseconds: 1000));
+    // //*fake delay
+    // await Future.delayed(const Duration(milliseconds: 300));
+    print('calling verify in controller...');
     state = await AsyncValue.guard(() => ref
         .read(signinServiceProvider)
         .verifyPhoneNumber(
@@ -41,11 +42,17 @@ class SigninScreenController extends _$SigninScreenController {
       {required String otpCode, required String verificationId}) async {
     //* it initially set the UI to loading
     state = const AsyncLoading();
+    print('calling verify in controller...otp');
     //* perform api call and save its result to a variable
     //* the .guard() method is used to catch possible error/exceptions
-    state = await AsyncValue.guard(() => ref
+    final newState = await AsyncValue.guard(() => ref
         .read(signinServiceProvider)
         .verifyOtpCode(otpCode: otpCode, verificationId: verificationId));
+
+    if (state.hasError) {
+      //only assign the state when verification failed. if not leave it as is to prevent updating the UI when screen is already unmounted
+      state = newState;
+    }
     return state.hasError == false;
   }
 }

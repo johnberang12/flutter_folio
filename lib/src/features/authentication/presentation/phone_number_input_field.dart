@@ -8,6 +8,9 @@ import '../../../utils/country_code_picker.dart';
 import 'pinput.dart';
 import 'signin_form_type.dart';
 
+// key used for testing
+const kSigninPhoneTextFieldKey = Key('signin-phone-text-field-key');
+
 class SignInNumberInputField extends StatelessWidget {
   const SignInNumberInputField({
     super.key,
@@ -65,8 +68,9 @@ class PhoneNumberInputField extends ConsumerWidget with SigninValidator {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final countryCode = ref.read(countryCodeProvider);
-    final phoneNumber = "+$countryCode${controller.text}}";
+    final phoneNumber = "+${countryCode + controller.text}";
     return OutlinedTextField(
+      textFormFieldKey: kSigninPhoneTextFieldKey,
       focusNode: focusNode,
       onTap: _onTap,
       prefix: _countryCodeWidget(context: context, ref: ref),

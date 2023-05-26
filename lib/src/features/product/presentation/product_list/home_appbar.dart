@@ -6,6 +6,9 @@ import '../../../../constants/app_colors.dart';
 import '../../../../constants/styles.dart';
 import '../../../product_search/product_search_screen.dart';
 
+//appbar key used for testing
+const kHomeAppbarKey = Key('home-appbar-key-1');
+
 class HomeAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const HomeAppBar({
     Key? key,
@@ -13,6 +16,7 @@ class HomeAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AppBar(
+      key: kHomeAppbarKey,
       shadowColor: Colors.transparent,
       backgroundColor: Colors.transparent,
       foregroundColor: AppColors.black80(context),

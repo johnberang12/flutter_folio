@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //* this class is used to retry an API call when exception was caught.
@@ -15,6 +16,7 @@ class APIRetry {
     try {
       await function();
     } catch (e) {
+      debugPrint('error from APIRetry: $e');
       if (_delay <= _maxDelay) {
         await Future.delayed(Duration(milliseconds: _delay));
         _delay *= 2;

@@ -11,6 +11,8 @@ import '../../../../constants/sizes.dart';
 import '../../../../constants/styles.dart';
 import '../../../routing/app_router/app_route.dart';
 
+const kProductTileKey = Key('product-list-tile-key');
+
 class ProductListTile extends ConsumerWidget {
   const ProductListTile({super.key});
 
@@ -19,6 +21,7 @@ class ProductListTile extends ConsumerWidget {
     final product = ref.watch(productProvider);
     final price = ref.watch(currencyFormatterProvider).format(product.price);
     return CustomListTile(
+      productTileKey: kProductTileKey,
       onTap: () => context.pushNamed(AppRoute.product.name, extra: product),
       thumbnail: CustomImage(
         clipRRect: 12,

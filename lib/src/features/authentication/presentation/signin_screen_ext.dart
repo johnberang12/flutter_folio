@@ -53,9 +53,14 @@ extension SigninScreenX on SigninScreen {
     return AuthException.internalError.message;
   }
 
-  void phoneVerificationFailed(FirebaseAuthException e, BuildContext context) =>
-      showExceptionAlertDialog(
-          context: context,
-          title: errorTitle(e.code),
-          exception: errorMessage(e.code));
+  void phoneVerificationFailed(FirebaseAuthException e, BuildContext context) {
+    debugPrint(
+        'phoneVerificationFailed===code:${e.code}, message:${e.message}');
+    showExceptionAlertDialog(
+        context: context,
+        //accepts a code to return title
+        title: errorTitle(e.code),
+        //accepts a code to return the message
+        exception: errorMessage(e.code));
+  }
 }

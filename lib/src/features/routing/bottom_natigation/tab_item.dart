@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+//keys for testing
+const kAccountIconTabKey = Key('account-icon-tab-key');
+const kHomeIconTabKey = Key('home-icon-tab-key');
+
 enum TabItem { home, account }
 
 class TabItemData {
@@ -14,12 +18,14 @@ class TabItemData {
         icon: Icon(
           Icons.home,
           size: 25,
+          key: kHomeIconTabKey,
         )),
     TabItem.account: const TabItemData(
       label: 'Account',
       icon: Icon(
         Icons.person,
         size: 25,
+        key: kAccountIconTabKey,
       ),
     ),
   };

@@ -53,11 +53,17 @@ class AuthRepository extends ChangeNotifier implements AuthService {
   }
 
   @override
-  Future<void> signOut() => auth.signOut().then((value) => notifyListeners());
+  Future<void> signOut() =>
+      auth.signOut().then((value) async => notifyListeners());
 
   @override
-  Future<void>? deleteAccount() =>
-      auth.currentUser?.delete().then((value) => notifyListeners());
+  Future<void>? deleteAccount()
+
+      //  async {
+      //   print('logout success');
+      // }
+      =>
+      auth.currentUser?.delete().then((value) async => notifyListeners());
 }
 
 @Riverpod(keepAlive: true)
