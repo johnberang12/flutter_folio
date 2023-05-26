@@ -48,8 +48,11 @@ This structure encourages feature encapsulation and makes it easier to locate th
 
 ## Explaining Each Folder
 • application: Houses feature's service classes, which encapsulate business logic.
+
 • data: Contains repository classes responsible for data access and manipulation.
+
 • domain: Holds data models defining the structure of objects in use.
+
 • presentation: Contains UI classes, including the actual UI code and controller classes that manage UI state and connect user actions to application logic.
 
 This approach helps to keep our codebase clean and maintainable, with each part of the code having a single, clear responsibility.
