@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_folio/src/features/authentication/data/auth_repository.dart';
 import 'package:flutter_folio/src/features/image_upload/image_upload_repository.dart';
 import 'package:flutter_folio/src/services/firestore_service/firestore_service.dart';
@@ -18,10 +15,10 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // determine whether this is a test run
-  final isTest = Platform.environment['FLUTTER_TEST'] == 'true';
+  // final isTest = Platform.environment['FLUTTER_TEST'] == 'true';
 
   // load the correct .env file
-  await dotenv.load(fileName: isTest ? '.env.test' : '.env.prod');
+  // await dotenv.load(fileName: isTest ? '.env.test' : '.env.prod');
 
   final appBootstrap = AppBootstrap();
   final container = await createFirebaseProviderContainer();

@@ -6,4 +6,16 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
+      #create a .env.test file in the github work flow before running flutter test
+      # to be able to read the secrets:
+      # 1. Navigate to your GitHub repository and click on "Settings" -> "Secrets" -> "New repository secret".
+      #  Here, you would add GOOGLE_API_KEY as the name of the secret and asdfasdfasdfasdfasdf as its value.
+      - name: Create .env.test file
+        run: |
+          echo "IS_TEST=${{ secrets.IS_TEST }}" > .env.test
+      - name: Create .env.prod file
+        run: |
+          echo "IS_TEST=${{ secrets.IS_TEST }}" > .env.prod
+        # we can add another echo for other secrets
+      #runs flutter test
       - run: flutter test

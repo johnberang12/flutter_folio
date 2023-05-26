@@ -1,5 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_folio/main.dart';
 import 'package:flutter_folio/src/constants/test_items.dart';
 import 'package:flutter_folio/src/features/authentication/data/auth_repository.dart';
@@ -27,7 +26,7 @@ void main() async {
   late ImagePickerRepository imagePickerRepository;
   setUpAll(() async {
     //Load env
-    await dotenv.load(fileName: '.env.test');
+    // await dotenv.load(fileName: '.env.test');
     registerFallbackValue(ImageSource.camera);
   });
 
