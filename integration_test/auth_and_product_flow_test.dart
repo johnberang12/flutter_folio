@@ -3,7 +3,7 @@ import 'package:flutter_folio/main.dart';
 import 'package:flutter_folio/src/constants/test_items.dart';
 import 'package:flutter_folio/src/features/authentication/data/auth_repository.dart';
 import 'package:flutter_folio/src/features/camera/data/image_picker_repository.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:integration_test/integration_test.dart';

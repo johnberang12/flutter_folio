@@ -15,4 +15,5 @@ Future<void> showAccessPermissionDeniedDialog({
             'You have denied the permission to access your ${permissionType.name}. To continue using this feature, you need to grand the permission in your device settings.',
         defaultActionText: 'Open settings',
         cancelActionText: 'Cancel',
-        callback: () => showUnimplementedAlertDialog(context: context));
+        callback: () => showUnimplementedAlertDialog(
+            context: context)); //this should be changed to open device settings

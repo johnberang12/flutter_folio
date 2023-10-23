@@ -6,7 +6,7 @@ import 'package:flutter_folio/src/features/product/data/product_repository.dart'
 import 'package:flutter_folio/src/features/product/domain/product.dart';
 import 'package:flutter_folio/src/utils/connection_checker.dart';
 import 'package:flutter_folio/src/utils/owner_verifier.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

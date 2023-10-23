@@ -2,27 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_folio/src/common_widget/photo_gallery.dart';
 import 'package:flutter_folio/src/features/account/presentation/account_screen.dart';
 
-import 'package:flutter_folio/src/features/authentication/data/auth_repository.dart';
 import 'package:flutter_folio/src/features/authentication/presentation/signin_screen.dart';
 import 'package:flutter_folio/src/features/introduction/welcome_screen.dart';
 
 import 'package:flutter_folio/src/features/product/presentation/product/product_screen.dart';
+import 'package:flutter_folio/src/features/routing/app_router/app_router_listenable.dart';
 
 import 'package:flutter_folio/src/features/routing/app_router/shell_widget.dart';
-import 'package:flutter_folio/src/landing_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../product/domain/product.dart';
 import '../../product/presentation/add_product/add_product_screen.dart';
 import '../bottom_natigation/home_screen.dart';
+import 'app_route_redirect.dart';
 import 'custom_transition_page.dart';
 
 part 'app_route.g.dart';
 
 enum AppRoute {
-  landing(path: '/'),
-  welcome(path: 'welcome'),
+  root(path: '/'),
   home(path: 'home'),
   signin(path: 'signin'),
   product(path: 'product'),
@@ -46,49 +45,43 @@ GoRouter goRouter(GoRouterRef ref) {
       debugLogDiagnostics: true,
       navigatorKey: rootNavigatorKey,
       initialLocation: '/',
-      refreshListenable: ref.watch(authRepositoryProvider),
-      redirect: (context, state) {
-        //* redirect callback of go_router. It is responsible for redirecting the user to the correct page
-        // when signingin and logging out.
+      refreshListenable: ref.watch(appRouterListenableProvider),
+      redirect: (context, state) => appRouteRedirect(context, ref, state),
 
-        final currentUser = ref.read(authRepositoryProvider).currentUser;
-        final loggingIn = state.location == '/signin';
-        debugPrint('currentLocation: ${state.location}');
-        debugPrint('currentUser: ${currentUser?.uid}');
-        final loggingOut = currentUser == null &&
-            (state.location == '/home' || state.location == '/');
-        final loggedIn = currentUser != null;
-        //redirect the user to the welcome screen when the user logs out
-        if (loggingOut) return '/welcome';
-        //redirect the user to the home screen when the use logs in
-        if (loggedIn && loggingIn) {
-          return '/home';
-        }
+      // (context, state) {
+      //   //* redirect callback of go_router. It is responsible for redirecting the user to the correct page
+      //   // when signingin and logging out.
 
-        return null;
-      },
+      //   final currentUser = ref.read(authRepositoryProvider).currentUser;
+      //   final loggingIn = state.location == '/signin';
+      //   debugPrint('currentLocation: ${state.location}');
+      //   debugPrint('currentUser: ${currentUser?.uid}');
+      //   final loggingOut = currentUser == null &&
+      //       (state.location == '/home' || state.location == '/');
+      //   final loggedIn = currentUser != null;
+      //   //redirect the user to the welcome screen when the user logs out
+      //   if (loggingOut) return '/welcome';
+      //   //redirect the user to the home screen when the use logs in
+      //   if (loggedIn && loggingIn) {
+      //     return '/home';
+      //   }
+
+      //   return null;
+      // },
       routes: [
         ShellRoute(
             navigatorKey: shellNavigatorKey,
             builder: (context, state, child) => ShellWidget(child: child),
             routes: [
               GoRoute(
-                  path: AppRoute.landing.path,
-                  name: AppRoute.landing.name,
+                  path: AppRoute.root.path,
+                  name: AppRoute.root.name,
                   pageBuilder: (context, state) =>
                       buildPageWithDefaultTransition<void>(
                           context: context,
                           state: state,
-                          child: const LandingPage()),
+                          child: const WelcomeScreen()),
                   routes: [
-                    GoRoute(
-                        path: AppRoute.welcome.path,
-                        name: AppRoute.welcome.name,
-                        pageBuilder: (context, state) =>
-                            buildPageWithDefaultTransition<void>(
-                                context: context,
-                                state: state,
-                                child: const WelcomeScreen())),
                     GoRoute(
                         path: AppRoute.signin.path,
                         name: AppRoute.signin.name,

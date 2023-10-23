@@ -4,7 +4,7 @@ import 'package:flutter_folio/src/features/product/domain/product.dart';
 import 'package:flutter_folio/src/features/product/presentation/product/product_screen_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../../mocks.dart';

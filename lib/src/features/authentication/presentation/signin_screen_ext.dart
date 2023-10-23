@@ -34,7 +34,7 @@ enum AuthException {
   final String message;
 }
 
-extension SigninScreenX on SigninScreen {
+extension SigninFormX on SigninForm {
   String errorTitle(String code) {
     for (var e in AuthException.values) {
       if (e.code == code) {

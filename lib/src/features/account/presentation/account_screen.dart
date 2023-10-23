@@ -6,7 +6,7 @@ import 'package:flutter_folio/src/common_widget/confirmation_callback.dart';
 import 'package:flutter_folio/src/constants/sizes.dart';
 import 'package:flutter_folio/src/features/account/presentation/account_screen_controller.dart';
 import 'package:flutter_folio/src/utils/async_value_ui.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../common_widget/alert_dialogs.dart';

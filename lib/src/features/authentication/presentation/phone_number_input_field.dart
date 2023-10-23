@@ -1,59 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_folio/src/features/authentication/presentation/signin_validators.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../common_widget/outlined_text_field.dart';
 import '../../../utils/country_code_picker.dart';
-import 'pinput.dart';
-import 'signin_form_type.dart';
 
 // key used for testing
 const kSigninPhoneTextFieldKey = Key('signin-phone-text-field-key');
 
-class SignInNumberInputField extends StatelessWidget {
-  const SignInNumberInputField({
-    super.key,
-    required this.formType,
-    required this.verifyPhoneNumber,
-    required this.submitOTP,
-    required this.numberController,
-    required this.otpController,
-    required this.focusNode,
-  });
-  final ValueNotifier<SigninFormType> formType;
-  final void Function(String) verifyPhoneNumber;
-  final Future<void> Function(String) submitOTP;
-  final TextEditingController numberController;
-  final TextEditingController otpController;
-  final FocusNode focusNode;
+// class SignInNumberInputField extends StatelessWidget {
+//   const SignInNumberInputField({
+//     super.key,
+//     required this.formType,
+//     required this.verifyPhoneNumber,
+//     required this.submitOTP,
+//     required this.numberController,
+//     required this.otpController,
+//     required this.focusNode,
+//   });
+//   final ValueNotifier<SigninFormType> formType;
+//   final void Function(String) verifyPhoneNumber;
+//   final Future<void> Function(String) submitOTP;
+//   final TextEditingController numberController;
+//   final TextEditingController otpController;
+//   final FocusNode focusNode;
 
-  @override
-  Widget build(BuildContext context) {
-    return formType.value == SigninFormType.otpCode
-        ? CustomPinPutWidget(
-            onSubmitOtp: submitOTP, otpController: otpController)
-        : PhoneNumberInputField(
-            focusNode: focusNode,
-            controller: numberController,
-            onEditingComplete: verifyPhoneNumber,
-          );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return formType.value == SigninFormType.otpCode
+//         ? CustomPinPutWidget(
+//             onSubmitOtp: submitOTP, otpController: otpController)
+//         : PhoneNumberInputField(
+//             focusNode: focusNode,
+//             controller: numberController,
+//             onEditingComplete: verifyPhoneNumber,
+//           );
+//   }
+// }
 
 class PhoneNumberInputField extends ConsumerWidget with SigninValidator {
   PhoneNumberInputField({
     super.key,
     required this.focusNode,
     required this.controller,
-    this.onchange,
-    this.onEditingComplete,
+    this.onchanged,
+    // this.onEditingComplete,
     this.validator,
   });
   final FocusNode focusNode;
   final TextEditingController controller;
-  final void Function(String)? onchange;
-  final void Function(String)? onEditingComplete;
+  final void Function(String)? onchanged;
+  // final void Function(String)? onEditingComplete;
 
   final String? Function(String?)? validator;
 
@@ -67,8 +65,8 @@ class PhoneNumberInputField extends ConsumerWidget with SigninValidator {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final countryCode = ref.read(countryCodeProvider);
-    final phoneNumber = "+${countryCode + controller.text}";
+    // final countryCode = ref.read(countryCodeProvider);
+    // final phoneNumber = "+${countryCode + controller.text}";
     return OutlinedTextField(
       textFormFieldKey: kSigninPhoneTextFieldKey,
       focusNode: focusNode,
@@ -82,13 +80,11 @@ class PhoneNumberInputField extends ConsumerWidget with SigninValidator {
       validator: numberErrorText,
       textInputAction: TextInputAction.send,
       keyboardType: TextInputType.number,
-      onChange: onchange,
-      onEditingComplete: onEditingComplete != null
-          ? () => onEditingComplete!(phoneNumber)
-          : null,
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\d*)'))
-      ],
+      onChange: onchanged,
+      // onEditingComplete: onEditingComplete != null
+      //     ? () => onEditingComplete!(controller.text)
+      //     : null,
+      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       maxLength: 10,
     );
   }

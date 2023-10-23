@@ -45,8 +45,8 @@ class PrimaryButton extends HookWidget {
     if (onPressed != null) {
       isLoading.value = true;
       await onPressed!();
-      final result = isMounted();
-      if (result) {
+      final mounted = isMounted();
+      if (mounted) {
         isLoading.value = false;
       }
     }

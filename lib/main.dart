@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_folio/src/features/authentication/data/auth_repository.dart';
 import 'package:flutter_folio/src/features/image_upload/image_upload_repository.dart';
 import 'package:flutter_folio/src/services/firestore_service/firestore_service.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'app_bootstrap.dart';
 import 'app_bootstrap_firebase.dart';

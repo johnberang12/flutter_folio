@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_folio/src/services/auth_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -8,7 +7,7 @@ part 'auth_repository.g.dart';
 
 //*unit test done//
 //the test ensures that calling each functions would correctly calles the FirebaseAuth methods
-class AuthRepository extends ChangeNotifier implements AuthService {
+class AuthRepository implements AuthService {
   AuthRepository({
     required this.auth,
   });
@@ -47,14 +46,11 @@ class AuthRepository extends ChangeNotifier implements AuthService {
       verificationId: verificationId,
       smsCode: otpCode,
     );
-    await auth
-        .signInWithCredential(credential)
-        .then((value) => notifyListeners());
+    await auth.signInWithCredential(credential);
   }
 
   @override
-  Future<void> signOut() =>
-      auth.signOut().then((value) async => notifyListeners());
+  Future<void> signOut() => auth.signOut();
 
   @override
   Future<void>? deleteAccount()
@@ -63,7 +59,7 @@ class AuthRepository extends ChangeNotifier implements AuthService {
       //   print('logout success');
       // }
       =>
-      auth.currentUser?.delete().then((value) async => notifyListeners());
+      auth.currentUser?.delete();
 }
 
 @Riverpod(keepAlive: true)

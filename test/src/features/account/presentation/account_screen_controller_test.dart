@@ -3,7 +3,8 @@ import 'package:flutter_folio/src/features/account/presentation/account_screen_c
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_folio/src/features/account/account_service/account_service.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:mocktail/mocktail.dart';
 
 import '../../../mocks.dart';
@@ -47,7 +48,7 @@ void main() {
         //* Arrange
         final accountService = MockAccountService();
 
-        when(accountService.logout).thenAnswer((invocation) => Future.value());
+        when(accountService.logout).thenAnswer((_) => Future.value());
 
         final container = makeProviderContainer(accountService);
 

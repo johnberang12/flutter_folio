@@ -35,6 +35,8 @@ class PickImageService {
         fileController.addItem(image);
       }
     }
+    // final delay = CallbackDelay();
+    // await delay.iterate();
   }
 
   Future<void> pickSingleGalleryImage(

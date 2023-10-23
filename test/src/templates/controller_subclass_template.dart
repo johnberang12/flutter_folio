@@ -3,7 +3,7 @@ import 'package:flutter_folio/src/features/account/presentation/account_screen_c
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_folio/src/features/account/account_service/account_service.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../mocks.dart';
@@ -33,7 +33,8 @@ void main() {
           accountScreenControllerProvider, listener,
           fireImmediately: true);
 //verify that the controller has an initial value of AsyncData(null)
-      verify(() => listener(null, const AsyncData<void>(null)));
+      const data = AsyncData<void>(null);
+      verify(() => listener(null, data));
 //verify that the listener is no longer called
       verifyNoMoreInteractions(listener);
       //verify that the accountService.logout() is not called
@@ -41,51 +42,77 @@ void main() {
       //verify that the accountService.deleteAccount() is not called
       verifyNever(() => accountService.deleteAccount(
           confirmation: any(named: 'confirmation')));
-    });
+    }, timeout: const Timeout(Duration(milliseconds: 500)));
     group('log out test', () {
-      test('', () async {
+      test(' success', () async {
         //* Arrange
-        //  when().thenAnswer((invocation) => Future.value());
+        //  when().thenAnswer((_) => Future.value());
 
         //*call
 
         //*assert
-        // expect(, );
+        //     verifyInOrder([
+        //   () => listener(data, any(that: isA<AsyncLoading>())),
+        //   () => listener(
+        //       any(that: isA<AsyncLoading>()), data),
+        // ]);
+
+        // verifyNoMoreInteractions(listener);
         //  verify().called(1);
         //  verifyNever();
       }, timeout: const Timeout(Duration(milliseconds: 500)));
-      test('', () async {
+      test(' failure', () async {
         //* Arrange
-        //  when().thenAnswer((invocation) => Future.value());
+        //  final error = Exception('error');
+        //  when().thenAnswer((_) => Future.value());
 
         //*call
 
         //*assert
-        // expect(, );
+        //     verifyInOrder([
+        //   () => listener(data, any(that: isA<AsyncLoading>())),
+        //   () => listener(
+        //       any(that: isA<AsyncLoading>()), any(that: isA<AsyncError>())),
+        // ]);
+
+        // verifyNoMoreInteractions(listener);
         //  verify().called(1);
         //  verifyNever();
       }, timeout: const Timeout(Duration(milliseconds: 500)));
     });
     group('deleteteAccount test', () {
-      test('', () async {
+      test(' success', () async {
         //* Arrange
-        //  when().thenAnswer((invocation) => Future.value());
+        //  when().thenAnswer((_) => Future.value());
 
         //*call
 
         //*assert
-        // expect(, );
+        //     verifyInOrder([
+        //   () => listener(data, any(that: isA<AsyncLoading>())),
+        //   () => listener(
+        //       any(that: isA<AsyncLoading>()), data),
+        // ]);
+
+        // verifyNoMoreInteractions(listener);
         //  verify().called(1);
         //  verifyNever();
       }, timeout: const Timeout(Duration(milliseconds: 500)));
-      test('', () async {
+      test(' failure', () async {
         //* Arrange
-        //  when().thenAnswer((invocation) => Future.value());
+        //  final error = Exception('error');
+        //  when().thenAnswer((_) => Future.value());
 
         //*call
 
         //*assert
-        // expect(, );
+        //    verifyInOrder([
+        //   () => listener(data, any(that: isA<AsyncLoading>())),
+        //   () => listener(
+        //       any(that: isA<AsyncLoading>()), any(that: isA<AsyncError>())),
+        // ]);
+
+        // verifyNoMoreInteractions(listener);
         //  verify().called(1);
         //  verifyNever();
       }, timeout: const Timeout(Duration(milliseconds: 500)));

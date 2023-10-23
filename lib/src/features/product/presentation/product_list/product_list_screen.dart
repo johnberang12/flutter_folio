@@ -6,7 +6,7 @@ import 'package:flutter_folio/src/features/product/data/product_repository.dart'
 import 'package:flutter_folio/src/features/product/presentation/product_list/home_appbar.dart';
 import 'package:flutter_folio/src/features/routing/app_router/app_route.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../common_widget/app_loader.dart';
 import '../../../../use_hooks/use_scroll_controller_for_animation.dart';

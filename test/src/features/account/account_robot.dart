@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_folio/src/common_widget/alert_dialogs.dart';
 import 'package:flutter_folio/src/features/account/account_service/account_service.dart';
 import 'package:flutter_folio/src/features/account/presentation/account_screen.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../mocks.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter_folio/src/features/account/account_service/account_service.dart';
+import 'package:flutter_folio/src/features/routing/app_router/app_router_listenable.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'account_screen_controller.g.dart';
@@ -16,7 +16,7 @@ class AccountScreenController extends _$AccountScreenController {
   Future<void> logout() async {
     state = const AsyncLoading();
     final newState =
-        await AsyncValue.guard(() => ref.read(accountServiceProvider).logout());
+        await AsyncValue.guard(ref.read(appRouterListenableProvider).signOut);
 
     if (newState.hasError) {
       //only assign the state to show error dialog in the UI if the logout fails
@@ -27,9 +27,8 @@ class AccountScreenController extends _$AccountScreenController {
 
   Future<void> deleteAccount(String confirmation) async {
     state = const AsyncLoading();
-    final newState = await AsyncValue.guard(() => ref
-        .read(accountServiceProvider)
-        .deleteAccount(confirmation: confirmation));
+    final newState = await AsyncValue.guard(() =>
+        ref.read(appRouterListenableProvider).deleteAccount(confirmation));
     if (newState.hasError) {
       state = newState;
     }

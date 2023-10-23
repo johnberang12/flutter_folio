@@ -32,6 +32,8 @@ class PermissionHandlerService implements PermissionHandler {
         } else {
           return PermissionStatus.granted;
         }
+      case PermissionType.location:
+        return await Permission.location.request();
       default:
         throw ArgumentError('Unsupported permission type');
     }

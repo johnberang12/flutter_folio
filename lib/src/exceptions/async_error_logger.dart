@@ -1,6 +1,6 @@
 import 'package:flutter_folio/src/exceptions/app_exception.dart';
 import 'package:flutter_folio/src/exceptions/error_logger.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AsyncErrorLogger extends ProviderObserver {
   @override

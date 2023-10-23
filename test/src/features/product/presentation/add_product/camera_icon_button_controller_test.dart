@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter_folio/src/common_widget/image_editing_controller.dart';
 import 'package:flutter_folio/src/features/camera/application/pick_image_service.dart';
 import 'package:flutter_folio/src/features/product/presentation/add_product/camera_icon_button_controller.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

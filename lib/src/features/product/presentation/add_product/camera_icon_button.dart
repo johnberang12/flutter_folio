@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_folio/src/common_widget/app_loader.dart';
 import 'package:flutter_folio/src/utils/async_value_ui.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../common_widget/image_editing_controller.dart';
 import '../../../../constants/app_colors.dart';
@@ -14,7 +16,7 @@ import 'camera_icon_button_controller.dart';
 
 const kCameraIconButtonKey = Key('camera-icon-button-key');
 
-class CameraIconButton extends ConsumerWidget {
+class CameraIconButton extends HookConsumerWidget {
   const CameraIconButton({
     Key? key,
     required this.height,
@@ -36,18 +38,22 @@ class CameraIconButton extends ConsumerWidget {
         ref.watch(cameraIconButtonControllerProvider.notifier);
 //calculates the total images taken plus the network images if available
     final totalImages = fileController.length + networkController.length;
-
+    final mounted = useIsMounted();
+    final state = ref.watch(cameraButtonControllerProvider);
     return InkWell(
       key: kCameraIconButtonKey,
       onTap: () => showCameraActionSheet(
           context: context,
-          pickMultipleImages: () => pickImageController.pickGalleryImages(
-              fileController: fileController,
-              deniedPermission: () => showAccessPermissionDeniedDialog(
-                    context: context,
-                    permissionType: PermissionType.photos,
-                  ),
-              totalImages: totalImages),
+          pickMultipleImages: () => ref
+              .read(cameraButtonControllerProvider.notifier)
+              .pickGalleryImages(
+                  mounted: mounted,
+                  fileController: fileController,
+                  deniedPermission: () => showAccessPermissionDeniedDialog(
+                        context: context,
+                        permissionType: PermissionType.photos,
+                      ),
+                  totalImages: totalImages),
           pickSingleImage: () async {},
           openDeviceCamera: () => pickImageController.openDeviceCamera(
               fileController: fileController,
@@ -67,11 +73,13 @@ class CameraIconButton extends ConsumerWidget {
               border: Border.all(width: 1, color: Colors.black)),
           child: AspectRatio(
             aspectRatio: 1.0,
-            child: Icon(
-              Icons.camera_alt_outlined,
-              size: Sizes.p28,
-              color: AppColors.black60(context),
-            ),
+            child: state.isLoading
+                ? AppLoader.circularProgress()
+                : Icon(
+                    Icons.camera_alt_outlined,
+                    size: Sizes.p28,
+                    color: AppColors.black60(context),
+                  ),
           )),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_folio/src/services/connectivity_service.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../common_widget/responsive_center.dart';
 import '../../../constants/app_colors.dart';
@@ -17,7 +17,7 @@ class ShellWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final connection = ref.watch(connectivityServiceProvider);
-    final topPad = MediaQuery.of(context).padding.top;
+    final topPad = MediaQuery.paddingOf(context).top;
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: ResponsiveCenter(

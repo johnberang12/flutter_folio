@@ -14,7 +14,7 @@ import 'package:flutter_folio/src/features/product/presentation/product_list/pro
 import 'package:flutter_folio/src/features/product/presentation/product_list/product_list_tile.dart';
 import 'package:flutter_folio/src/features/routing/app_router/app_route.dart';
 import 'package:flutter_folio/src/features/routing/bottom_natigation/tab_item.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class ProductRobot {

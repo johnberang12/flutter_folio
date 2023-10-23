@@ -3,7 +3,7 @@ import 'dart:async';
 
 import 'package:flutter_folio/src/services/connectivity_service.dart';
 import 'package:flutter_folio/src/utils/api_retry.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 //* this class is used to check user's internet connection before calling an api
 //* it tries to retry fetching internet connection 5 times before it finally delares that the user has no internet connection

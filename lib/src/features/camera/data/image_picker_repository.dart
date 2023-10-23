@@ -69,8 +69,8 @@ class ImagePickerRepository {
   }
 }
 
-@Riverpod(keepAlive: true)
-ImagePicker imagePicker(ImagePickerRef ref) => ImagePicker();
+// @Riverpod(keepAlive: true)
+// ImagePicker imagePicker(ImagePickerRef ref) => ImagePicker();
 
 @Riverpod(keepAlive: true)
 ImagePickerRepository imagePickerRepository(ImagePickerRepositoryRef ref) =>

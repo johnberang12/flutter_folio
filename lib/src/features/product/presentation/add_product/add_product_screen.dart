@@ -13,14 +13,15 @@ import 'package:flutter_folio/src/features/product/presentation/add_product/add_
 import 'package:flutter_folio/src/features/product/presentation/add_product/add_product_screen_validator.dart';
 import 'package:flutter_folio/src/features/product/presentation/add_product/image_input_widget.dart';
 import 'package:flutter_folio/src/utils/async_value_ui.dart';
+import 'package:flutter_folio/src/utils/form_validator.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../common_widget/clear_text_field.dart';
 import '../../../../common_widget/confirmation_callback.dart';
 import '../../../../constants/styles.dart';
-import '../../../../utils/form_validator.dart';
 import '../../domain/product.dart';
 
 const kOnSaveButtonKey = Key('add-prod-screen-done-button-key');
@@ -29,7 +30,8 @@ const kProductTitleFieldKey = Key('product-title-field-key');
 const kProductPriceFieldKey = Key('product-price-field-key');
 const kProductDescriptionFieldKey = Key('product-description-field-key');
 
-class AddProductScreen extends HookWidget with AddProductScreenValidator {
+class AddProductScreen extends HookConsumerWidget
+    with AddProductScreenValidator {
   AddProductScreen({super.key, Product? product}) : _product = product;
   final Product? _product;
   final _formKey = GlobalKey<FormState>();
@@ -48,7 +50,7 @@ class AddProductScreen extends HookWidget with AddProductScreenValidator {
       List<File> images) async {
     final toast = AppToast();
     //this validates the form and save if all fields are valid
-    final isValid = ref.read(formValidatorProvider(_formKey.currentState!));
+    final isValid = formIsValid(_formKey.currentState!);
     // final isValid = _isFormValid();
     //checks if the network images is empty and the picked file images is empty, returns false
     final isNotEmptyPhotos = (images.isNotEmpty || product.photos.isNotEmpty);
@@ -81,7 +83,7 @@ class AddProductScreen extends HookWidget with AddProductScreenValidator {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final titleController = useTextEditingController();
     final priceController = useTextEditingController();
     final descriptionController = useTextEditingController();
@@ -97,7 +99,6 @@ class AddProductScreen extends HookWidget with AddProductScreenValidator {
 
       return null;
     }, []);
-
     return Scaffold(
       appBar: AppBar(
         key: kAddProductScreenAppbarKey,
@@ -152,13 +153,7 @@ class AddProductScreen extends HookWidget with AddProductScreenValidator {
                   isLoading: state.isLoading,
                   child: LayoutListView(children: [
                     gapH12,
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ImageInputWidget(product: _product),
-                      ],
-                    ),
+                    ImageInputWidget(product: _product),
 
                     const Divider(
                       height: 0.5,

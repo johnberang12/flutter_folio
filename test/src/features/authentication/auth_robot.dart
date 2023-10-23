@@ -13,8 +13,9 @@ import 'package:flutter_folio/src/features/product/presentation/product_list/hom
 import 'package:flutter_folio/src/features/routing/app_router/app_route.dart';
 import 'package:flutter_folio/src/features/routing/bottom_natigation/cupertino_home_scaffold.dart';
 import 'package:flutter_folio/src/features/routing/bottom_natigation/tab_item.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:http/http.dart' as http;
 

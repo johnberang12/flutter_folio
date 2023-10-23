@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../common_widget/custom_image.dart';
 import '../../../common_widget/image_editing_controller.dart';
@@ -37,8 +37,7 @@ class ImageInputField extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final imageCount = fileValue.length + (networkValue?.length ?? 0);
-    final networkimages = networkController?.value.length;
-    print('networkImage length: $networkimages');
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,

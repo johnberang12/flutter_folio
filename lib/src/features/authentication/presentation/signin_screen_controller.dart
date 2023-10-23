@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_folio/src/features/routing/app_router/app_router_listenable.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../application/signin_service.dart';
@@ -46,10 +47,9 @@ class SigninScreenController extends _$SigninScreenController {
     //* perform api call and save its result to a variable
     //* the .guard() method is used to catch possible error/exceptions
     final newState = await AsyncValue.guard(() => ref
-        .read(signinServiceProvider)
+        .read(appRouterListenableProvider)
         .verifyOtpCode(otpCode: otpCode, verificationId: verificationId));
-
-    if (state.hasError) {
+    if (newState.hasError) {
       //only assign the state when verification failed. if not leave it as is to prevent updating the UI when screen is already unmounted
       state = newState;
     }

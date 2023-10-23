@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_folio/src/common_widget/app_toast.dart';
 import 'package:flutter_folio/src/common_widget/custom_image.dart';
 import 'package:flutter_folio/src/extensions/app_navigator.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../common_widget/dot_length_indicator.dart';

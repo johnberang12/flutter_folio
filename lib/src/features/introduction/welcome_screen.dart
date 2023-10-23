@@ -30,7 +30,7 @@ class WelcomeScreen extends StatelessWidget {
                 backgroundImage: AssetImage('assets/my_profile.png')),
             gapH12,
             Text(
-              'John Berang',
+              'Jober Tech',
               style: Styles.k16Bold(context),
             ),
             const Text('Flutter Dev')

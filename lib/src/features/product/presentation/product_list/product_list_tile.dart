@@ -3,7 +3,7 @@ import 'package:flutter_folio/src/common_widget/custom_image.dart';
 import 'package:flutter_folio/src/common_widget/custom_list_tile.dart';
 import 'package:flutter_folio/src/features/product/presentation/product_list/product_list_screen.dart';
 import 'package:flutter_folio/src/utils/currency_formatter.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../constants/app_colors.dart';

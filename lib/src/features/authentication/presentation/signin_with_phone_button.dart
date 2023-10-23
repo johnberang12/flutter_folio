@@ -4,33 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_folio/src/features/authentication/presentation/signin_screen_controller.dart';
 import 'package:flutter_folio/src/features/authentication/presentation/signin_validators.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../common_widget/primary_button.dart';
 import '../../../constants/styles.dart';
-import 'phone_number_input_field.dart';
 import 'signin_form_type.dart';
 
 const kPhoneSigninButtonKey = Key('phone-signin-button-key');
 
-class SignInWithPhoneButton extends HookWidget with SigninValidator {
+class SignInWithPhoneButton extends HookConsumerWidget with SigninValidator {
   SignInWithPhoneButton(
       {super.key,
       required this.onPrimaryButtonPress,
       required this.controller,
-      required this.formType,
       required this.resendCode});
 
-  final Future<void> Function(ValueNotifier<SigninFormType>, String phoneNumber)
-      onPrimaryButtonPress;
+  final Future<void> Function() onPrimaryButtonPress;
   final void Function() resendCode;
   final TextEditingController controller;
-  final ValueNotifier<SigninFormType> formType;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final canSubmit = useState<bool>(false);
-
     void handleTextChanged() {
       canSubmit.value = canSubmitNumber(controller.text);
     }
@@ -40,25 +36,18 @@ class SignInWithPhoneButton extends HookWidget with SigninValidator {
       return () => controller.removeListener(handleTextChanged);
     }, [controller]);
     return Consumer(builder: (context, ref, _) {
-      final countryCode = ref.read(countryCodeProvider);
-      final phoneNumber = "+$countryCode${controller.text}";
       final state = ref.watch(signinScreenControllerProvider);
+      final formType = ref.watch(signinFormTypeProvider);
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (formType.value == SigninFormType.otpCode) ...[
-            _ResendButton(
-              onSubmit: resendCode,
-            )
-          ],
+          ...formType.resendButton(resendCode),
           PrimaryButton(
             key: kPhoneSigninButtonKey,
             loading: state.isLoading,
             width: double.infinity,
-            onPressed: !canSubmit.value
-                ? null
-                : () => onPrimaryButtonPress(formType, phoneNumber),
-            child: Text(formType.value.signinButtonText,
+            onPressed: !canSubmit.value ? null : () => onPrimaryButtonPress(),
+            child: Text(formType.signinButtonText,
                 style: Styles.k16(context).copyWith(color: Colors.white)),
           )
         ],
@@ -67,8 +56,8 @@ class SignInWithPhoneButton extends HookWidget with SigninValidator {
   }
 }
 
-class _ResendButton extends HookWidget {
-  const _ResendButton({
+class ResendButton extends HookWidget {
+  const ResendButton({
     Key? key,
     required this.onSubmit,
   }) : super(key: key);

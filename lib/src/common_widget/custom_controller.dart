@@ -1,16 +1,6 @@
 //an auto dispose custom controller.
-// import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-// part 'custom_controller.g.dart';
-
-// @riverpod
-// class ImageEditingController<T> extends _$ImageEditingController {
-//   @override
-//   build() {}
-
-// }
-
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CustomController<T> extends StateNotifier<List<T>> {
   CustomController() : super([]);

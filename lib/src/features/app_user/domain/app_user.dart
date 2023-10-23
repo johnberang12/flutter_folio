@@ -10,12 +10,13 @@ class AppUser {
   final String email;
   final String phoneNumber;
   final String photoUrl;
+
   AppUser({
     required this.uid,
-    required this.name,
+    this.name = '',
     required this.email,
     required this.phoneNumber,
-    required this.photoUrl,
+    this.photoUrl = '',
   });
 
   AppUser copyWith({

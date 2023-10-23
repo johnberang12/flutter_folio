@@ -10,7 +10,7 @@ import 'package:flutter_folio/src/features/product/presentation/product/product_
 import 'package:flutter_folio/src/features/product/presentation/product_list/product_list_screen.dart';
 import 'package:flutter_folio/src/utils/async_value_ui.dart';
 import 'package:flutter_folio/src/utils/currency_formatter.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../common_widget/primary_button.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_folio/src/exceptions/app_exception.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../common_widget/alert_dialogs.dart';
 

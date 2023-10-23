@@ -3,9 +3,9 @@ import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_folio/src/features/authentication/data/auth_repository.dart';
-import 'package:flutter_folio/src/landing_page.dart';
+import 'package:flutter_folio/src/features/introduction/welcome_screen.dart';
 import 'package:flutter_folio/src/services/firestore_service/firestore_service.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -34,7 +34,7 @@ void main() {
           authStateChangesProvider.overrideWith((ref) => Stream.value(null))
         ],
         child: const MaterialApp(
-          home: LandingPage(),
+          home: WelcomeScreen(),
         )));
     await tester.pumpAndSettle();
     final getStartedButtonText = find.text('Get started');
@@ -51,7 +51,7 @@ void main() {
             firebaseAuthProvider.overrideWithValue(auth),
           ],
           child: const MaterialApp(
-            home: LandingPage(),
+            home: WelcomeScreen(),
           )));
 
       await tester.pump();

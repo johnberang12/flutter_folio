@@ -4,6 +4,9 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_folio/src/features/tester/tester_repository.dart';
+import 'package:flutter_folio/src/features/tester/tester_service.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -100,3 +103,9 @@ class MockSigninService extends Mock implements SigninService {}
 class MockProductService extends Mock implements ProductService {}
 
 class MockPickImageService extends Mock implements PickImageService {}
+
+class MockTesterRepository extends Mock implements TesterRepository {}
+
+class MockTesterService extends Mock implements TesterService {}
+
+class MockRef extends Mock implements Ref {}
